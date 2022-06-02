@@ -3,45 +3,29 @@
 #include<iostream>
 #include<string>
 
-#include "Point.h"
-
 
 class BasicShapes
 {
-private:
-	/*Point* mPoints;
-	size_t mNumberOfPoints;*/
+protected:
+
 	std::string mColor;
 	double mX;
 	double mY;
 
-	////help functions
-	//void copy(const BasicShapes& other);
-	//void deleteDynamic();
+
 public:
 
+	//pure virtual functions 
+	//this class is abstract
 	virtual double getX() const = 0;
 	virtual double getY() const = 0;
 	virtual const std::string getColor() const = 0;
+	virtual BasicShapes* clone() const = 0;
 
+	BasicShapes();
+	BasicShapes(double, double, std::string);
 	virtual ~BasicShapes() {}
-
-
-	////big 4
-	//BasicShapes();
-	//BasicShapes(size_t numberOfPoints);
-	//BasicShapes(const BasicShapes& other);
-	//BasicShapes& operator=(const BasicShapes& other);
-	//virtual~BasicShapes();
-
 };
-
-
-
-
-
-
-
 
 
 

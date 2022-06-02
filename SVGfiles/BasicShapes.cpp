@@ -4,20 +4,37 @@
 
 
 
-double BasicShapes::getX() const
+//constructors
+BasicShapes::BasicShapes()
 {
-	return this->mX;
+	this->mX = 0;
+	this->mY = 0;
+	this->mColor = "noColor";
 }
-double BasicShapes::getY() const
+BasicShapes::BasicShapes(double x, double y, std::string color)
 {
-	return this->mY;
-}
-const std::string BasicShapes::getColor() const
-{
-	return this->mColor;
+	this->mX = x;
+	this->mY = y;
+	this->mColor = color;
 }
 
 
+
+
+//double BasicShapes::getX() const
+//{
+//	return this->mX;
+//}
+//double BasicShapes::getY() const
+//{
+//	return this->mY;
+//}
+//const std::string BasicShapes::getColor() const
+//{
+//	return this->mColor;
+//}
+//
+//
 
 
 

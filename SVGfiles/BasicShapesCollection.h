@@ -1,1 +1,32 @@
-#pragma once
+#ifndef __BASICSHAPESCOLLECTION_H
+#define __BASICSHAPESCOLLECTION_H
+#include "BasicShapes.h"
+
+
+class BasicShapesCollection
+{
+private:
+	BasicShapes** mShapes;
+	size_t mCountShapes;
+	size_t mCapacity;
+
+	void deleteDynamic();
+	void copy(const BasicShapesCollection& other);
+public:
+
+	BasicShapesCollection();
+	BasicShapesCollection(BasicShapes** shapes, size_t shapesNumber, size_t capacity);
+	BasicShapesCollection(const BasicShapesCollection& other);
+	BasicShapesCollection& operator=(const BasicShapesCollection& other);
+	~BasicShapesCollection();
+};
+
+
+
+
+
+
+
+
+#endif // !__BASICSHAPESCOLLECTION_H
+
