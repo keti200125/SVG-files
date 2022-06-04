@@ -2,6 +2,7 @@
 
 
 //help functions
+
 void BasicShapesCollection::deleteDynamic()
 {
 	for (int i = 0; i < this->mCountShapes; i++)
@@ -25,7 +26,16 @@ void BasicShapesCollection::copy(const BasicShapesCollection& other)
 		
 	}
 }
-
+void BasicShapesCollection::resize()
+{
+	BasicShapes** helpCollection = new BasicShapes * [this->mCapacity *=2];
+	for (int i = 0; i < this->mCountShapes; i++)
+	{
+		helpCollection[i] = this->mShapes[i];
+		delete[] this->mShapes[i];
+	}
+	this->mShapes = helpCollection;
+}
 
 
 //big 4 
@@ -61,4 +71,14 @@ BasicShapesCollection& BasicShapesCollection::operator=(const BasicShapesCollect
 BasicShapesCollection::~BasicShapesCollection()
 {
 	deleteDynamic();
+}
+
+
+void BasicShapesCollection::addShape(const BasicShapes& basicShape)
+{
+	if (this->mCountShapes == this->mCapacity)
+	{
+		resize();
+	}
+	this->mShapes[this->mCountShapes++] = basicShape.clone();
 }

@@ -142,6 +142,7 @@
     <ClInclude Include="BasicShapes.h" />
     <ClInclude Include="BasicShapesCollection.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="Operations.h" />
     <ClInclude Include="Rectangle.h" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +150,7 @@
     <ClCompile Include="BasicShapesCollection.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Operations.cpp" />
     <ClCompile Include="Rectangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

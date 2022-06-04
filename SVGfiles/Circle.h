@@ -20,6 +20,7 @@ public:
 	double getY() const override;
 	const std::string getColor() const override;
 	BasicShapes* clone() const override;
+	virtual void print() const override;
 
 
 

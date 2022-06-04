@@ -21,6 +21,7 @@ public:
 	virtual double getY() const = 0;
 	virtual const std::string getColor() const = 0;
 	virtual BasicShapes* clone() const = 0;
+	virtual void print() const = 0;
 
 	BasicShapes();
 	BasicShapes(double, double, std::string);

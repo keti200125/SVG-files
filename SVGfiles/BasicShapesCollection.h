@@ -12,7 +12,10 @@ private:
 
 	void deleteDynamic();
 	void copy(const BasicShapesCollection& other);
+	void resize();
 public:
+
+	void addShape(const BasicShapes& basicShape);
 
 	BasicShapesCollection();
 	BasicShapesCollection(BasicShapes** shapes, size_t shapesNumber, size_t capacity);

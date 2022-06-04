@@ -19,6 +19,8 @@ public:
 	double getX() const override;
 	double getY() const override;
 	const std::string getColor() const override;
+
+	virtual void print() const override;
 };
 
 
