@@ -1,14 +1,15 @@
-#ifndef __OPERATIONS_H
-#define __OPERATIONS_H
+#ifndef __COMMANDS_H
+#define __COMMANDS_H
+#include<iostream>
 #include<string>
 
 
-class Operations
+class Commands
 {
 public:
 
 	void open(std::string fileName);
-	void close();
+	void close(std::string fileName);
 	void save();
 	void SaveAs();
 	void help();
@@ -19,8 +20,9 @@ public:
 	void translate(size_t n);
 	void within(); // <option> ??
 
-
 };
+
+
 
 
 

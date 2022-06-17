@@ -2,7 +2,7 @@
 #define __ELLIPSE_H
 #include "BasicShapes.h"
 
-class Ellipse : BasicShapes
+class Ellipse : public BasicShapes
 {
 	double mRx;
 	double mRy;

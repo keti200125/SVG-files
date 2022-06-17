@@ -142,20 +142,19 @@
     <ClInclude Include="BasicShapes.h" />
     <ClInclude Include="BasicShapesCollection.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="Commands.h" />
     <ClInclude Include="Ellipse.h" />
     <ClInclude Include="Line.h" />
-    <ClInclude Include="Operations.h" />
     <ClInclude Include="Rectangle.h" />
-    <ClInclude Include="WorkWithCommands.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicShapes.cpp" />
     <ClCompile Include="BasicShapesCollection.cpp" />
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Ellipse.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Operations.cpp" />
     <ClCompile Include="Rectangle.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

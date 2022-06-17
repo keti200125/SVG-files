@@ -1,6 +1,8 @@
 #include "BasicShapesCollection.h"
 #include "Rectangle.h"
 #include "Circle.h"
+#include "Line.h"
+#include "Ellipse.h"
 
 
 
@@ -91,6 +93,16 @@ void BasicShapesCollection::addCircle(double x, double y, std::string color, dou
 {
 	Circle* circle = new Circle(x, y, color, radius);
 	addShape(circle);
+}
+void BasicShapesCollection::addLine(double x1, double y1, std::string color, double x2, double y2)
+{
+	Line* line = new Line(x1, y1, color, x2, y2);
+	addShape(line);
+}
+void BasicShapesCollection::addEllipse(double x, double y, double rX, double rY, std::string color)
+{
+	Ellipse* ellipse = new Ellipse(x, y, rX, rY, color);
+	addShape(ellipse);
 }
 
 void BasicShapesCollection::removeShapeByIndex(std::size_t index) //

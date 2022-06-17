@@ -3,7 +3,7 @@
 #include "BasicShapes.h"
 
 
-class Line :BasicShapes
+class Line : public BasicShapes
 {
 private:
 	double mX2;
