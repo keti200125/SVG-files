@@ -1,12 +1,13 @@
 #ifndef __OPERATIONS_H
 #define __OPERATIONS_H
+#include<string>
 
 
 class Operations
 {
 public:
 
-	void open();
+	void open(std::string fileName);
 	void close();
 	void save();
 	void SaveAs();

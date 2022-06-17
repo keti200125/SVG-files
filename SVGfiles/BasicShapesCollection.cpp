@@ -1,4 +1,7 @@
 #include "BasicShapesCollection.h"
+#include "Rectangle.h"
+#include "Circle.h"
+
 
 
 //help functions
@@ -13,14 +16,10 @@ void BasicShapesCollection::deleteDynamic()
 }
 void BasicShapesCollection::copy(const BasicShapesCollection& other)
 {
-	if (this->mShapes)
-	{
-		deleteDynamic();
-	}
+	this->mShapes = new BasicShapes * [other.mCapacity];
 	this->mCountShapes = other.mCountShapes;
 	this->mCapacity = other.mCapacity;
-	this->mShapes = new BasicShapes * [this->mCountShapes];
-	for (int i = 0; i < other.mCountShapes; i++)
+	for (int i = 0; i < other.mCapacity; i++)
 	{
 		this->mShapes[i] = other.mShapes[i]->clone();
 		
@@ -32,8 +31,8 @@ void BasicShapesCollection::resize()
 	for (int i = 0; i < this->mCountShapes; i++)
 	{
 		helpCollection[i] = this->mShapes[i];
-		delete[] this->mShapes[i];
 	}
+	delete[] this->mShapes;
 	this->mShapes = helpCollection;
 }
 
@@ -74,11 +73,29 @@ BasicShapesCollection::~BasicShapesCollection()
 }
 
 
-void BasicShapesCollection::addShape(const BasicShapes& basicShape)
+void BasicShapesCollection::addShape(BasicShapes* basicShape)
 {
 	if (this->mCountShapes == this->mCapacity)
 	{
 		resize();
 	}
-	this->mShapes[this->mCountShapes++] = basicShape.clone();
+	this->mShapes[this->mCountShapes++] = basicShape;
+}
+void BasicShapesCollection::addRectangle(double x, double y, std::string color, double width, double height)
+{
+	Rectangle* rectangle = new Rectangle(x, y, color, width, height);
+	addShape(rectangle);
+
+}
+void BasicShapesCollection::addCircle(double x, double y, std::string color, double radius)
+{
+	Circle* circle = new Circle(x, y, color, radius);
+	addShape(circle);
+}
+
+void BasicShapesCollection::removeShapeByIndex(std::size_t index) //
+{
+	BasicShapes** currCollection = new BasicShapes * [this->mCapacity];
+
+
 }

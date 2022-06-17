@@ -1,30 +1,23 @@
-#ifndef __CIRCLE_H
-#define __CIRCLE_H
+#ifndef __ELLIPSE_H
+#define __ELLIPSE_H
 #include "BasicShapes.h"
 
-
-
-
-class Circle : public BasicShapes
+class Ellipse : BasicShapes
 {
-private:
-
-	double mRadius;
-
+	double mRx;
+	double mRy;
 public:
-
-	Circle();
-	Circle(double, double, std::string, double);
-
+	Ellipse();
+	Ellipse(double, double,double,double, std::string);
 	double getX() const override;
 	double getY() const override;
 	const std::string getColor() const override;
 	BasicShapes* clone() const override;
 	void print() const override;
 
-
-
 };
+
+
 
 
 

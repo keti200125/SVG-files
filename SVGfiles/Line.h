@@ -1,30 +1,27 @@
-#ifndef __CIRCLE_H
-#define __CIRCLE_H
+#ifndef __LINE_H
+#define __LINE_H
 #include "BasicShapes.h"
 
 
-
-
-class Circle : public BasicShapes
+class Line :BasicShapes
 {
 private:
-
-	double mRadius;
-
+	double mX2;
+	double mY2;
 public:
 
-	Circle();
-	Circle(double, double, std::string, double);
-
+	Line();
+	Line(double, double, std::string, double, double);
 	double getX() const override;
 	double getY() const override;
 	const std::string getColor() const override;
 	BasicShapes* clone() const override;
 	void print() const override;
 
-
-
 };
+
+
+
 
 
 

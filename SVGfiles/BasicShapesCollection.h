@@ -13,9 +13,13 @@ private:
 	void deleteDynamic();
 	void copy(const BasicShapesCollection& other);
 	void resize();
+
+	void addShape(BasicShapes* basicShape);
 public:
 
-	void addShape(const BasicShapes& basicShape);
+	void removeShapeByIndex(std::size_t index);
+	void addRectangle(double x, double y, std::string color, double width, double height);
+	void addCircle(double x, double y, std::string color, double radius);
 
 	BasicShapesCollection();
 	BasicShapesCollection(BasicShapes** shapes, size_t shapesNumber, size_t capacity);
