@@ -111,3 +111,11 @@ void BasicShapesCollection::removeShapeByIndex(std::size_t index) //
 
 
 }
+
+void BasicShapesCollection::printAll() const
+{
+	for (int i = 0; i < this->mCountShapes; i++)
+	{
+		this->mShapes[i]->print();
+	}
+}

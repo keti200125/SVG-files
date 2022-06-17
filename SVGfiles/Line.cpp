@@ -31,5 +31,6 @@ BasicShapes* Line::clone() const
 }
 void Line::print() const
 {
+	std::cout << "line " << this->mX << " " << this->mY << " " << this->mX2 << " " << this->mY2 << " " << this->mColor;
 
 }

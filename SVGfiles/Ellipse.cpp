@@ -32,5 +32,5 @@ BasicShapes* Ellipse::clone() const
 }
 void Ellipse::print() const
 {
-
+	std::cout << "ellipse " << this->mX << " " << this->mY << " " << this->mRx << " " << this->mRy << " " << this->mColor;
 }

@@ -17,6 +17,8 @@ private:
 	void addShape(BasicShapes* basicShape);
 public:
 
+	void printAll() const;
+
 	void removeShapeByIndex(std::size_t index);
 	void addRectangle(double x, double y, std::string color, double width, double height);
 	void addCircle(double x, double y, std::string color, double radius);

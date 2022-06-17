@@ -32,4 +32,9 @@ BasicShapes* Circle::clone() const
 	return copy;
 }
 
+void Circle::print() const
+{
+	std::cout << "circle " << this->mX << " " << this->mY << " " << this->mRadius << " " << this->mColor;
+}
+
  

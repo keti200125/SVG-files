@@ -29,10 +29,13 @@ const std::string Rectangle::getColor() const
 }
 
 
-
-
 BasicShapes* Rectangle::clone() const
 {
 	BasicShapes* copy = new Rectangle(*this);
 	return copy;
+}
+
+void Rectangle::print() const
+{
+	std::cout << "rectangle " << this->mX << " " << this->mY << " " << this->mWidth << " " << this->mHeight << " " << this->mWidth << " " << this->mColor;
 }

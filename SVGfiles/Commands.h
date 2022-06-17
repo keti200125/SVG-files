@@ -14,7 +14,7 @@ public:
 	void SaveAs();
 	void help();
 	void exit();
-	void print();
+	void print() const;
 	void create();
 	void erase(size_t n);
 	void translate(size_t n);
