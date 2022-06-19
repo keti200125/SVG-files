@@ -2,16 +2,20 @@
 #define __COMMANDS_H
 #include<iostream>
 #include<string>
+#include "BasicShapesCollection.h"
 
 
 class Commands
 {
+private:
+	BasicShapesCollection& basicShapesCollection;
+
 public:
 
 	void open(std::string fileName);
 	void close(std::string fileName);
 	void save();
-	void SaveAs();
+	void saveAs();
 	void help();
 	void exit();
 	void print() const;

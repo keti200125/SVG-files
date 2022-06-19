@@ -17,6 +17,8 @@ private:
 	void addShape(BasicShapes* basicShape);
 public:
 
+
+
 	void printAll() const;
 
 	void removeShapeByIndex(std::size_t index);
@@ -30,6 +32,19 @@ public:
 	BasicShapesCollection(const BasicShapesCollection& other);
 	BasicShapesCollection& operator=(const BasicShapesCollection& other);
 	~BasicShapesCollection();
+
+
+	void open(std::string fileName);
+	void close(std::string fileName);
+	void save();
+	void saveAs();
+	void help();
+	void exit();
+	void print() const;
+	void create();
+	void erase(size_t n);
+	void translate(size_t n);
+	void within(); // <option> ??
 };
 
 
