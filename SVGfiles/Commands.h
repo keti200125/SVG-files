@@ -12,17 +12,19 @@ private:
 
 public:
 
-	void open(std::string fileName); //ok 
-	void close(); //ok
-	void save();  // ok ?
-	void saveAs(std::string fileName); //ok ?
-	void help(); //ok
-	void exit(); //ok ???
-	void print() const; //ok
+	void open(std::string fileName); //
+	void close(); //
+	void save(std::string);  // 
+	void SaveAs(std::string fileName); //
+	void help() const; //
+	void exit(std::string); //
+	void print() const; //
 	/*void create(char* figure);*/  //realized in run
-	void erase(size_t n); // ok  ?
-	void translate(size_t n);
-	void within(); // <option> ??
+	void erase(size_t n); // 
+	void translate(size_t n); 
+	void withinCircle(int,int,int); 
+	void withinRectangle(int, int, int, int); 
+
 	void extraFileFunction();
 
 	void run();

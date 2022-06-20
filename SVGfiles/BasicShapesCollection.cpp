@@ -111,7 +111,7 @@ void BasicShapesCollection::removeShapeByIndex(std::size_t index) //
 	{
 		BasicShapes** currCollection = new BasicShapes * [this->mCapacity];
 		size_t counter = 0;
-		for (int i = 0; i < this->mCountShapes; i++)
+		for (size_t i = 0; i < this->mCountShapes; i++)
 		{
 			if (i != index)
 			{
