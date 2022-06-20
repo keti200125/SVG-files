@@ -7,18 +7,18 @@ class Rectangle: public BasicShapes
 {
 private:
 
-	double mWidth;
-	double mHeight;
+	int mWidth;
+	int mHeight;
 public:
 
 	Rectangle();
-	Rectangle(double x, double y, std::string color, double width, double height);
+	Rectangle(int, int, std::string, int, int);
 
 	BasicShapes* clone() const override;
 
-	double getX() const override;
-	double getY() const override;
-	const std::string getColor() const override;
+	int getX() const override;
+	int getY() const override;
+	const std::string getFill() const override;
 
 	void print() const override;
 };

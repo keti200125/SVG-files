@@ -22,10 +22,10 @@ public:
 	void printAll() const;
 
 	void removeShapeByIndex(std::size_t index);
-	void addRectangle(double x, double y, std::string color, double width, double height);
-	void addCircle(double x, double y, std::string color, double radius);
-	void addLine(double x1, double y1, std::string color, double x2, double y2);
-	void addEllipse(double x, double y, double rX, double rY, std::string color);
+	void addRectangle(int x, int y, std::string fill, int width, int height);
+	void addCircle(int x, int y, std::string fill, int radius);
+	void addLine(int x1, int y1, std::string fill, int x2, int y2);
+	void addEllipse(int x, int y, int rX, int rY, std::string fill);
 
 	BasicShapesCollection();
 	BasicShapesCollection(BasicShapes** shapes, size_t shapesNumber, size_t capacity);
@@ -34,17 +34,6 @@ public:
 	~BasicShapesCollection();
 
 
-	void open(std::string fileName);
-	void close(std::string fileName);
-	void save();
-	void saveAs();
-	void help();
-	void exit();
-	void print() const;
-	void create();
-	void erase(size_t n);
-	void translate(size_t n);
-	void within(); // <option> ??
 };
 
 

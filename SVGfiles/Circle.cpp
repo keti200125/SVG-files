@@ -6,23 +6,27 @@ Circle::Circle() : BasicShapes()
 {
 	this->mRadius = 0;
 }
-Circle::Circle(double x, double y, std::string color, double radius): BasicShapes(x,y,color)
+Circle::Circle(int x, int y, std::string fill, int radius): BasicShapes(x,y,fill)
 {
+	if (radius < 0)
+	{
+		throw "Invalid input";
+	}
 	this->mRadius = radius;
 }
 
 //getters
-double Circle::getX() const
+int Circle::getX() const
 {
 	return this->mX;
 }
-double Circle::getY() const
+int Circle::getY() const
 {
 	return this->mY;
 }
-const std::string Circle::getColor() const
+const std::string Circle::getFill() const
 {
-	return this->mColor;
+	return this->mFill;
 }
 
 
@@ -34,7 +38,7 @@ BasicShapes* Circle::clone() const
 
 void Circle::print() const
 {
-	std::cout << "circle " << this->mX << " " << this->mY << " " << this->mRadius << " " << this->mColor;
+	std::cout << "circle " << this->mX << " " << this->mY << " " << this->mRadius << " " << this->mFill;
 }
 
  

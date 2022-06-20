@@ -83,25 +83,25 @@ void BasicShapesCollection::addShape(BasicShapes* basicShape)
 	}
 	this->mShapes[this->mCountShapes++] = basicShape;
 }
-void BasicShapesCollection::addRectangle(double x, double y, std::string color, double width, double height)
+void BasicShapesCollection::addRectangle(int x, int y, std::string fill, int width, int height)
 {
-	Rectangle* rectangle = new Rectangle(x, y, color, width, height);
+	Rectangle* rectangle = new Rectangle(x, y, fill, width, height);
 	addShape(rectangle);
 
 }
-void BasicShapesCollection::addCircle(double x, double y, std::string color, double radius)
+void BasicShapesCollection::addCircle(int x, int y, std::string fill,int radius)
 {
-	Circle* circle = new Circle(x, y, color, radius);
+	Circle* circle = new Circle(x, y, fill, radius);
 	addShape(circle);
 }
-void BasicShapesCollection::addLine(double x1, double y1, std::string color, double x2, double y2)
+void BasicShapesCollection::addLine(int x1, int y1, std::string fill, int x2, int y2)
 {
-	Line* line = new Line(x1, y1, color, x2, y2);
+	Line* line = new Line(x1, y1, fill, x2, y2);
 	addShape(line);
 }
-void BasicShapesCollection::addEllipse(double x, double y, double rX, double rY, std::string color)
+void BasicShapesCollection::addEllipse(int x, int y, int rX, int rY, std::string fill)
 {
-	Ellipse* ellipse = new Ellipse(x, y, rX, rY, color);
+	Ellipse* ellipse = new Ellipse(x, y, rX, rY, fill);
 	addShape(ellipse);
 }
 

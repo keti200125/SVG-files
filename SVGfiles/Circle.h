@@ -9,16 +9,16 @@ class Circle : public BasicShapes
 {
 private:
 
-	double mRadius;
+	int mRadius;
 
 public:
 
 	Circle();
-	Circle(double, double, std::string, double);
+	Circle(int, int, std::string,int);
 
-	double getX() const override;
-	double getY() const override;
-	const std::string getColor() const override;
+	int getX() const override;
+	int getY() const override;
+	const std::string getFill() const override;
 	BasicShapes* clone() const override;
 	void print() const override;
 

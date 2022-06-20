@@ -8,12 +8,12 @@
 class Commands
 {
 private:
-	BasicShapesCollection& basicShapesCollection;
+	BasicShapesCollection& mBasicShapesCollection;
 
 public:
 
 	void open(std::string fileName);
-	void close(std::string fileName);
+	void close();
 	void save();
 	void saveAs();
 	void help();

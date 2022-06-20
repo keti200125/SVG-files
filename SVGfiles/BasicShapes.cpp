@@ -9,13 +9,13 @@ BasicShapes::BasicShapes()
 {
 	this->mX = 0;
 	this->mY = 0;
-	this->mColor = "none";
+	this->mFill = "none";
 }
-BasicShapes::BasicShapes(double x, double y, std::string color)
+BasicShapes::BasicShapes(int x, int y, std::string fill)
 {
 	this->mX = x;
 	this->mY = y;
-	this->mColor = color;
+	this->mFill = fill;
 }
 
 

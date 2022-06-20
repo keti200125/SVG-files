@@ -6,15 +6,15 @@
 class Line : public BasicShapes
 {
 private:
-	double mX2;
-	double mY2;
+	int mX2;
+	int mY2;
 public:
 
 	Line();
-	Line(double, double, std::string, double, double);
-	double getX() const override;
-	double getY() const override;
-	const std::string getColor() const override;
+	Line(int, int, std::string, int, int);
+	int getX() const override;
+	int getY() const override;
+	const std::string getFill() const override;
 	BasicShapes* clone() const override;
 	void print() const override;
 

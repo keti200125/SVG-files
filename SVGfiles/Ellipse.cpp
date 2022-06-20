@@ -7,23 +7,27 @@ Ellipse::Ellipse() :BasicShapes()
 	this->mRy = 0;
 
 }
-Ellipse::Ellipse(double x, double y, double rX, double rY, std::string color) :BasicShapes(x,y,color)
+Ellipse::Ellipse(int x, int y, int rX, int rY, std::string fill) :BasicShapes(x,y,fill)
 {
+	if (rX < 0 || rY < 0)
+	{
+		throw "Invalid input";
+	}
 	this->mRx = rX;
 	this->mRy = rY;
 
 }
-double Ellipse::getX() const
+int Ellipse::getX() const
 {
 	return this->mX;
 }
-double Ellipse::getY() const
+int Ellipse::getY() const
 {
 	return this->mY;
 }
-const std::string Ellipse::getColor() const
+const std::string Ellipse::getFill() const
 {
-	return this->mColor;
+	return this->mFill;
 }
 BasicShapes* Ellipse::clone() const
 {
@@ -32,5 +36,5 @@ BasicShapes* Ellipse::clone() const
 }
 void Ellipse::print() const
 {
-	std::cout << "ellipse " << this->mX << " " << this->mY << " " << this->mRx << " " << this->mRy << " " << this->mColor;
+	std::cout << "ellipse " << this->mX << " " << this->mY << " " << this->mRx << " " << this->mRy << " " << this->mFill;
 }

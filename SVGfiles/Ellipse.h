@@ -4,14 +4,14 @@
 
 class Ellipse : public BasicShapes
 {
-	double mRx;
-	double mRy;
+	int mRx;
+	int mRy;
 public:
 	Ellipse();
-	Ellipse(double, double,double,double, std::string);
-	double getX() const override;
-	double getY() const override;
-	const std::string getColor() const override;
+	Ellipse(int, int,int,int, std::string);
+	int getX() const override;
+	int getY() const override;
+	const std::string getFill() const override;
 	BasicShapes* clone() const override;
 	void print() const override;
 
