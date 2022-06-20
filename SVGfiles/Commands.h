@@ -19,10 +19,11 @@ public:
 	void help(); //ok
 	void exit(); //ok ???
 	void print() const; //ok
-	void create(char* figure);
+	/*void create(char* figure);*/  //realized in run
 	void erase(size_t n); // ok  ?
 	void translate(size_t n);
 	void within(); // <option> ??
+	void extraFileFunction();
 
 	void run();
 

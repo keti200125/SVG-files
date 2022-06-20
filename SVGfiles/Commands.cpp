@@ -6,6 +6,7 @@
 
 
 std::fstream SVGFile;
+std::fstream SVGRecovoryFile;
 
 void readNumber(size_t indexCopy,size_t index, size_t counter,size_t helper, char* readFromFile, int num)
 {
@@ -24,6 +25,11 @@ void readNumber(size_t indexCopy,size_t index, size_t counter,size_t helper, cha
 
 }
 
+void Commands::extraFileFunction()
+{
+	SVGRecovoryFile.open("figuresExtra.svg", std::ios::out);
+	saveAs("figuresExtra.svg");
+}
 
 void Commands::open(std::string fileName)
 {
@@ -390,10 +396,10 @@ void Commands::exit()
 	}
 
 }
-void Commands::create(char* figure) //???
-{
-
-}
+//void Commands::create(char* figure) // realized in run
+//{
+//
+//}
 void Commands::erase(size_t n)
 {
 	this->mBasicShapesCollection.removeShapeByIndex(n);
@@ -406,37 +412,79 @@ void Commands::run()
 	size_t helpMe = 0;
 	while (helpMe != 1)
 	{
-		char userWishes[100];
+		std::cout << "> ";
+		char userWishes[100] = {};
 		char fileName[100] = {};
-		std::cin.getline(userWishes, 100);
+		char figureName[100] = {};
+		std::cin.getline(userWishes, 100, ' ');
 		int len = std::strlen(userWishes);
 
-		if (userWishes[2] == 'o')
+		//open
+		if (userWishes[0] == 'o')
 		{
-			int j = 0;
-			for (int i = 7; i < len; i++)
-			{
-				fileName[j] = userWishes[i];
-				j++;
-			}
+			std::cin.getline(fileName, 100);
 			open(fileName);
 		}
-		if (userWishes[2] == 'c')
+
+		//close
+		if (userWishes[0]=='c' && userWishes[1] == 'l')
 		{
 			close();
 		}
-		if (userWishes[2] == 'h')
+
+		//Help
+		if (userWishes[0] == 'h')
 		{
 			help();
 		}
-		if (userWishes[2] == 'p')
+
+		//Print
+		if (userWishes[0] == 'p')
 		{
 			print();
 		}
-		if (userWishes[2] == 'e')
+
+		//Exit
+		if (userWishes[0] == 'e'&&userWishes[1]=='x')
 		{
 			exit();
 			helpMe = 1;
+		}
+		//Save && SaveAs
+		if (userWishes[0] == 's')
+		{
+			if (len<5)
+			{
+				save();
+			}
+			std::cin.getline(fileName, 100);
+			saveAs(fileName);
+		}
+
+		//Erase <n>
+		if (userWishes[0] == 'e'&&userWishes[1]=='r')
+		{
+			size_t n;
+			std::cin >> n;
+			erase(n);
+			
+		}
+
+		//Create
+		if (userWishes[0] == 'c' && userWishes[1] == 'r')
+		{
+			std::cin.getline(figureName, 100, ' ');
+			if (figureName == "rectangle")
+			{
+				int x;
+				std::cin >> x;
+				int y;
+				std::cin >> y;
+				int width;
+				std::cin >> width;
+				int height;
+				std::cin >> height;
+			}
 		}
 	}
 
