@@ -107,7 +107,26 @@ void BasicShapesCollection::addEllipse(int x, int y, int rX, int rY, std::string
 
 void BasicShapesCollection::removeShapeByIndex(std::size_t index) //
 {
-	BasicShapes** currCollection = new BasicShapes * [this->mCapacity];
+	if (index < this->mCountShapes)
+	{
+		BasicShapes** currCollection = new BasicShapes * [this->mCapacity];
+		size_t counter = 0;
+		for (int i = 0; i < this->mCountShapes; i++)
+		{
+			if (i != index)
+			{
+				currCollection[counter] = this->mShapes[i];
+				counter++;
+			}
+		}
+		this->mCountShapes--;
+		delete[] this->mShapes;
+		this->mShapes = currCollection;
+	}
+	else
+	{
+		std::cout << "There is no figure on this position";
+	}
 
 
 }
@@ -118,6 +137,29 @@ void BasicShapesCollection::printAll() const
 	{
 		this->mShapes[i]->print();
 	}
+}
+
+void BasicShapesCollection::freeAllSpace()
+{
+	for (int i = 0; i < this->mCountShapes; i++)
+	{
+		delete this->mShapes[i];
+	}
+	delete[] this->mShapes;
+
+	this->mCountShapes = 0;
+	this->mCapacity = 10;
+	this->mShapes = new BasicShapes * [this->mCapacity];
+}
+
+void BasicShapesCollection::writeInFile(std::ostream& os)
+{
+	os << "<svg>" << '\n';
+	for (int i = 0; i < this->mCountShapes; i++)
+	{
+		this->mShapes[i]->operator<<(os);
+	}
+	os << "</svg>" << '\n';
 }
 
 

@@ -21,6 +21,8 @@ public:
 	const std::string getFill() const override;
 
 	void print() const override;
+	
+	std::ostream& operator<<(std::ostream&) override;
 };
 
 

@@ -38,3 +38,9 @@ void Ellipse::print() const
 {
 	std::cout << "ellipse " << this->mX << " " << this->mY << " " << this->mRx << " " << this->mRy << " " << this->mFill;
 }
+
+std::ostream& Ellipse::operator<<(std::ostream& os)  //<ellipse cx="  100  " cy="50" rx="100" ry="50" fill="red"/>
+{
+	os << "<ellipse cx=" << '"' << this->mX << '"' << ' ' << "cy=" << '"' << this->mY << '"' << ' ' << "rx=" << '"' << this->mRx<< '"' << ' ' << "ry=" << '"' << this->mRy << '"' << ' ' << "fill=" << '"' << this->mFill << '"' << ' ' << '/' << '>' << '\n';
+	return os;
+}

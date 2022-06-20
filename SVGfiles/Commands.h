@@ -8,21 +8,23 @@
 class Commands
 {
 private:
-	BasicShapesCollection& mBasicShapesCollection;
+	BasicShapesCollection mBasicShapesCollection;
 
 public:
 
-	void open(std::string fileName);
-	void close();
-	void save();
-	void saveAs();
-	void help();
-	void exit();
-	void print() const;
-	void create();
-	void erase(size_t n);
+	void open(std::string fileName); //ok 
+	void close(); //ok
+	void save();  // ok ?
+	void saveAs(std::string fileName); //ok ?
+	void help(); //ok
+	void exit(); //ok ???
+	void print() const; //ok
+	void create(char* figure);
+	void erase(size_t n); // ok  ?
 	void translate(size_t n);
 	void within(); // <option> ??
+
+	void run();
 
 };
 

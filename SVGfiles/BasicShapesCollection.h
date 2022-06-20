@@ -34,6 +34,8 @@ public:
 	~BasicShapesCollection();
 
 
+	void freeAllSpace();
+	void writeInFile(std::ostream&);
 };
 
 

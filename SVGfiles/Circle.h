@@ -22,6 +22,8 @@ public:
 	BasicShapes* clone() const override;
 	void print() const override;
 
+	std::ostream& operator<<(std::ostream&) override;
+
 
 
 };

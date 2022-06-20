@@ -26,6 +26,8 @@ public:
 	BasicShapes();
 	BasicShapes(int, int, std::string);
 	virtual ~BasicShapes() = default;
+
+	virtual std::ostream& operator<<(std::ostream& write) = 0;
 };
 
 

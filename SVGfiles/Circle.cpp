@@ -42,3 +42,9 @@ void Circle::print() const
 }
 
  
+std::ostream& Circle::operator<<(std::ostream& os)  //<circle cx="5" cy="5" r="10" fill="blue" />
+{
+	os << "<circle cx=" << '"' << this->mX << '"' << ' ' << "cy=" << '"' << this->mY << '"' << ' ' << "r=" << '"' << this->mRadius<< '"' <<' '<<"fill=" << '"' << this->mFill << '"' << ' ' << '/' << '>' << '\n';
+	return os;
+
+}

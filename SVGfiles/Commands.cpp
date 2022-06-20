@@ -4,8 +4,8 @@
 #include<cstring>
 #pragma warning(disable: 4996)
 
-std::fstream SVGFile;
 
+std::fstream SVGFile;
 
 void readNumber(size_t indexCopy,size_t index, size_t counter,size_t helper, char* readFromFile, int num)
 {
@@ -43,7 +43,7 @@ void Commands::open(std::string fileName)
 			SVGFile << "<?xml version=" << '"' << "1.0" << '"' << " standalone =" << '"' << "no" << '"' << "?>"<< '\n';
 			SVGFile << "<!DOCTYPE svg PUBLIC " << '"' << " -//W3C//DTD SVG 1.1//EN" << '"' << '\n';
 			SVGFile << '"' << "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" << '"' << '>' << '\n';
-			SVGFile << "<svg>" << '\n';
+			SVGFile << "<svg> \n";
 			SVGFile << "</svg>";
 			std::cout << "Successfully created new file " << fileName << std::endl;
 			SVGFile.close();
@@ -63,12 +63,11 @@ void Commands::open(std::string fileName)
 	SVGFile.seekg(current);
 
 	//now we put what we read from the file in char
-	char* readFromFile;
+	char readFromFile[5000];
 	SVGFile.read(readFromFile, size);
-	readFromFile[size]= '\0';
+	readFromFile[size+1]= '\0';
 
 	SVGFile.close();
-	//dont forget to delete readFromFile
 
 	
 	
@@ -90,9 +89,9 @@ void Commands::open(std::string fileName)
 				index += 9; // num <rect x="   5   " y="5" width="10" height="10" fill="green" />
 
 				//for x 
-				int indexCopy = index;
-				int counter = 0;
-				int helper = 1;
+				size_t indexCopy = index;
+				size_t counter = 0;
+				size_t helper = 1;
 
 				readNumber(indexCopy, index, counter, helper, readFromFile,x);
 			
@@ -127,7 +126,7 @@ void Commands::open(std::string fileName)
 					index++;
 
 				}
-				fill[iF + 1] = '/0';
+				/*fill[iF + 1] = '/0';*/
 
 				mBasicShapesCollection.addRectangle(x, y, fill, width, height);
 			}
@@ -143,9 +142,9 @@ void Commands::open(std::string fileName)
 				int radius = 0;
 				index += 12; // num <circle cx="   5   " cy="5" r="10" fill="blue" />
 
-				int indexCopy = index;
-				int counter = 0;
-				int helper = 1;
+				size_t indexCopy = index;
+				size_t counter = 0;
+				size_t helper = 1;
 
 				//for x
 				readNumber(indexCopy, index, counter, helper, readFromFile, x);
@@ -177,7 +176,7 @@ void Commands::open(std::string fileName)
 					index++;
 
 				}
-				fill[iF + 1] = '/0';
+				/*fill[iF + 1] = '/0';*/
 
 
 				mBasicShapesCollection.addCircle(x, y, fill, radius);
@@ -197,9 +196,9 @@ void Commands::open(std::string fileName)
 				int r2 = 0;
 				index += 13; // num  <ellipse cx="  100  " cy="50" rx="100" ry="50" fill="red"/>
 
-				int indexCopy = index;
-				int counter = 0;
-				int helper = 1;
+				size_t indexCopy = index;
+				size_t counter = 0;
+				size_t helper = 1;
 
 				//for x
 				readNumber(indexCopy, index, counter, helper, readFromFile, x);
@@ -238,7 +237,7 @@ void Commands::open(std::string fileName)
 					index++;
 
 				}
-				fill[iF + 1] = '/0';
+				/*fill[iF + 1] = '/0';*/
 
 
 				mBasicShapesCollection.addEllipse(x, y, r1, r2, fill);
@@ -257,9 +256,9 @@ void Commands::open(std::string fileName)
 				int y2 = 0;
 				index += 10; // num <line x1="  300  " y1="300" x2="500" y2="100" fill="none"/>
 
-				int indexCopy = index;
-				int counter = 0;
-				int helper = 1;
+				size_t indexCopy = index;
+				size_t counter = 0;
+				size_t helper = 1;
 
 				//for x
 				readNumber(indexCopy, index, counter, helper, readFromFile, x);
@@ -298,7 +297,6 @@ void Commands::open(std::string fileName)
 					index++;
 
 				}
-				fill[iF + 1] = '/0';
 
 
 				mBasicShapesCollection.addLine(x, y, fill,x2,y2);
@@ -312,7 +310,6 @@ void Commands::open(std::string fileName)
 		index++;
 	}
 
-	delete[] readFromFile;
 
 }
 
@@ -325,8 +322,9 @@ void Commands::close()
 		SVGFile.close();
 	}
 
-
+	this->mBasicShapesCollection.freeAllSpace();
 	
+	std::cout << "Successfully closed file"<< std::endl;
 }
 
 void Commands::help()
@@ -352,14 +350,95 @@ void Commands::print() const
 
 void Commands::save()
 {
+	if (!SVGFile.is_open())
+	{
+		std::cout << "Imppossible to be saved" << std::endl;
+	}
+	else
+	{
+		this->mBasicShapesCollection.writeInFile(SVGFile);
+		std::cout << "Successfully saved" << std::endl;
+	}
+}
+void Commands::saveAs(std::string fileName)
+{
+	std::fstream newFile;
+	newFile.open(fileName,std::ios::out);
+
+	if (!newFile.is_open())
+	{
+		throw "File isnt opened";
+	}
+
+	this->mBasicShapesCollection.writeInFile(newFile);
+	std::cout << "Successfully saved" << std::endl;
+
 
 }
-void saveAs();
-void help();
-void exit();
-void Commands::create()
+void Commands::exit()
+{
+	std::cout << "You have an open file with unsaved changes, please select close-1 or save-2 first." << std::endl;
+	size_t decision;
+	std::cin >> decision;
+	if (decision == 1)
+	{
+		close();
+	}
+	else
+	{
+		save();
+	}
+
+}
+void Commands::create(char* figure) //???
 {
 
 }
-void erase(size_t n);
+void Commands::erase(size_t n)
+{
+	this->mBasicShapesCollection.removeShapeByIndex(n);
+}
 void translate(size_t n);
+
+
+void Commands::run()
+{
+	size_t helpMe = 0;
+	while (helpMe != 1)
+	{
+		char userWishes[100];
+		char fileName[100] = {};
+		std::cin.getline(userWishes, 100);
+		int len = std::strlen(userWishes);
+
+		if (userWishes[2] == 'o')
+		{
+			int j = 0;
+			for (int i = 7; i < len; i++)
+			{
+				fileName[j] = userWishes[i];
+				j++;
+			}
+			open(fileName);
+		}
+		if (userWishes[2] == 'c')
+		{
+			close();
+		}
+		if (userWishes[2] == 'h')
+		{
+			help();
+		}
+		if (userWishes[2] == 'p')
+		{
+			print();
+		}
+		if (userWishes[2] == 'e')
+		{
+			exit();
+			helpMe = 1;
+		}
+	}
+
+	
+}
