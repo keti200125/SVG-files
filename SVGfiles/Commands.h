@@ -19,7 +19,7 @@ public:
 	void help() const; //
 	void exit(std::string); //
 	void print() const; //
-	/*void create(char* figure);*/  //realized in run
+	void create(); //
 	void erase(size_t n); // 
 	void translate(size_t n); 
 	void withinCircle(int,int,int); 

@@ -7,6 +7,7 @@
 
 std::fstream SVGFile;
 std::fstream SVGRecovoryFile;
+std::string fileNameCopy;
 
 void readNumber(size_t indexCopy,size_t index, size_t counter,size_t helper, char* readFromFile, int num)
 {
@@ -30,11 +31,13 @@ void Commands::extraFileFunction()
 	SVGRecovoryFile.open("recovery.svg", std::ios::out);
 	SaveAs("recovery.svg");
 	std::cout<<"in recovery";
+	std::cout << std::endl;
 }
 
 void Commands::open(std::string fileName)
 {
 	SVGFile.open(fileName, std::ios::in);
+	fileNameCopy = fileName;
 
 
 	if (!SVGFile)
@@ -47,9 +50,9 @@ void Commands::open(std::string fileName)
 		}
 		else
 		{
-			/*SVGFile << "<?xml version=" << '"' << "1.0" << '"' << " standalone =" << '"' << "no" << '"' << "?>"<< '\n';
-			SVGFile << "<!DOCTYPE svg PUBLIC " << '"' << " -//W3C//DTD SVG 1.1//EN" << '"' << '\n';
-			SVGFile << '"' << "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" << '"' << '>' << '\n';*/
+			SVGFile << "<?xml version=" << '"' << "1.0" << '"' << " standalone=" << '"' << "no" << '"' << "?>"<< '\n';
+			SVGFile << "<!DOCTYPE svg PUBLIC " << '"' << "-//W3C//DTD SVG 1.1//EN" << '"' << '\n';
+			SVGFile <<' '<< '"' << "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" << '"' << '>' << '\n';
 			SVGFile << "<svg> \n";
 			SVGFile << "</svg>";
 			std::cout << "Successfully created new file " << fileName << std::endl;
@@ -347,7 +350,7 @@ void Commands::help() const
 	std::cout << "create            creates a new figure" << std::endl;
 	std::cout << "erase <n>         deletes a figure with sequence number <n>" << std::endl;
 	std::cout << "translate [<n>]   translates the figure with sequence number <n> or all figures, if <n> not specified" << std::endl;
-	std::cout << "within <option>   displays all shapes that are completely contained in a given region.The user can specify by <option>"<<std::endl;
+	std::cout << "within <option>   displays all shapes that are completely contained in a given region.The user can specify by <option>" << std::endl;
 }
 
 void Commands::print() const
@@ -397,10 +400,66 @@ void Commands::exit(std::string fileName)
 	}
 
 }
-//void Commands::create(char* figure) // realized in run
-//{
-//
-//}
+void Commands::create() 
+{
+	char color[50];
+	char figureName[100];
+    std::cout << "Figure name? ";
+	std::cin.getline(figureName, 100);
+
+	//verification
+	if (figureName[0] != 'r' && figureName[0] != 'c' && figureName[0] != 'e' && figureName[0] != 'l')
+	{
+		std::cout << "Wrong Input! Try rectangle, circle, ellipse or line :)";
+		std::cin.getline(figureName, 100);
+	}
+	std::cout << "Color? ";
+	std::cin.getline(color, 100);
+	int x, y;
+	std::cout<<"X? ";
+	std::cin >> x;
+	std::cout << "y? ";
+	std::cin >> y;
+	if (figureName[0] == 'r')
+	{
+		std::cout << "width? ";
+		int width;
+		std::cin >> width;
+		std::cout << "height? ";
+		int height;
+		std::cin >> height;
+
+		this->mBasicShapesCollection.addRectangle(x, y, color, width, height);
+	}
+	if (figureName[0] == 'c')
+	{
+		std::cout << "r? ";
+		int r;
+		std::cin >> r;
+
+		this->mBasicShapesCollection.addCircle(x, y, color, r);
+	}
+	if (figureName[0] == 'e')
+	{
+		int r1, r2;
+		std::cout << "r1? ";
+		std::cin >> r1;
+		std::cout << "r2? ";
+		std::cin >> r2;
+
+		this->mBasicShapesCollection.addEllipse(x, y, r1, r2, color);
+	}
+	if (figureName[0] == 'l')
+	{
+		int x2, y2;
+		std::cout << "x2? ";
+		std::cin >> x2;
+		std::cout << "y2? ";
+		std::cin >> y2;
+
+		this->mBasicShapesCollection.addLine(x, y, color, x2, y2);
+	}
+}
 void Commands::erase(size_t n)
 {
 	this->mBasicShapesCollection.removeShapeByIndex(n);
@@ -416,23 +475,24 @@ void Commands::withinRectangle(int x, int y, int width, int height)
 
 }
 
-void Commands::run()
+void Commands::run() //enter
 {
 	int helpMe = 0;
 	while (helpMe != 1)
 	{
 		std::cout << "> ";
 		char userWishes[100] = {};
-		char fileName[100] = {};
-		char fileName2[100] = {};
-		std::cin.getline(userWishes, 100, ' ');
+		char fileNameForOpen[100] = {};
+		char fileNameForSaveAs[100] = {};
+		std::cin.getline(userWishes, 100);
 		size_t len = std::strlen(userWishes);
 
 		//open
-		if (userWishes[0] == 'o')
+		if (userWishes[0]=='o')
 		{
-			std::cin.getline(fileName, 100);
-			open(fileName);
+			std::cout << "File name? ";
+			std::cin.getline(fileNameForOpen, 100);
+			open(fileNameForOpen);
 		}
 
 		//close
@@ -442,7 +502,7 @@ void Commands::run()
 		}
 
 		//Help
-		if (userWishes[0] == 'h')
+		if (userWishes[0] == 'h') 
 		{
 			help();
 		}
@@ -456,19 +516,22 @@ void Commands::run()
 		//Exit
 		if (userWishes[0] == 'e'&&userWishes[1]=='x')
 		{
-			exit(fileName);
+			exit(fileNameCopy);
 			helpMe = 1;
 			std::cout << "Exit";
 		}
 		//Save && SaveAs
-		if (userWishes[0] == 'S')
-		{
-		     std::cin.getline(fileName2, 100);
-		     SaveAs(fileName2);
-		}
 		if (userWishes[0] == 's')
 		{
-			save(fileName);
+			if (strlen(userWishes) > 5)
+			{
+				std::cin.getline(fileNameForSaveAs, 100);
+				SaveAs(fileNameForSaveAs);
+			}
+			else
+			{
+				save(fileNameCopy);
+			}
 		}
 
 		//Erase <n>
@@ -483,71 +546,32 @@ void Commands::run()
 		//Create
 		if (userWishes[0] == 'c' && userWishes[1] == 'r') //color is first 
 		{
-			char color[50] = {};
-			char figureName[100] = {};
-			std::cin.getline(figureName, 100, ' ');
-			std::cin.getline(color, 100, ' ');
+			create();
+			extraFileFunction(); //
+		}
+
+		/*if (figureName[0] == 'w')
+		{
+			char whichFigure[100];
+			std::cin.getline(whichFigure, 100, ' ');
 			int x, y;
 			std::cin >> x;
 			std::cin >> y;
-			if (figureName[0] == 'r')
-			{
-				int width;
-				std::cin >> width;
-				int height;
-				std::cin >> height;
 
-				this->mBasicShapesCollection.addRectangle(x, y, color, width, height);
-			}
-			if (figureName[0] =='c')
+			if (whichFigure[0] == 'c')
 			{
 				int r;
 				std::cin >> r;
-
-				this->mBasicShapesCollection.addCircle(x, y, color, r);
+				withinCircle(x, y, r);
 			}
-			if (figureName[0] == 'e')
+			if (whichFigure[0] == 'r')
 			{
-				int r1, r2;
-				std::cin >> r1;
-				std::cin >> r2;
-
-				this->mBasicShapesCollection.addEllipse(x, y, r1, r2, color);
+				int w, h;
+				std::cin >> w;
+				std::cin >> h;
+				withinRectangle(x, y, w, h);
 			}
-			if (figureName[0] == 'l')
-			{
-				int x2, y2;
-				std::cin >> x2;
-				std::cin >> y2;
-
-				this->mBasicShapesCollection.addLine(x, y, color, x2, y2);
-			}
-
-			if (figureName[0] == 'w')
-			{
-				char whichFigure[100];
-				std::cin.getline(whichFigure, 100, ' ');
-				int x, y;
-				std::cin >> x;
-				std::cin >> y;
-
-				if (whichFigure[0] == 'c')
-				{
-					int r;
-					std::cin >> r;
-					withinCircle(x, y, r);
-				}
-				if (whichFigure[0] == 'r')
-				{
-					int w, h;
-					std::cin >> w;
-					std::cin >> h;
-					withinRectangle(x, y, w, h);
-				}
-			}
-
-			extraFileFunction(); //
-		}
+		}*/
 	}
 
 	

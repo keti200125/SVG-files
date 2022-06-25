@@ -154,7 +154,10 @@ void BasicShapesCollection::freeAllSpace()
 
 void BasicShapesCollection::writeInFile(std::ostream& os)
 {
-	os << "<svg>" << '\n';
+	os << "<?xml version=" << '"' << "1.0" << '"' << " standalone=" << '"' << "no" << '"' << "?>" << '\n';
+	os << "<!DOCTYPE svg PUBLIC " << '"' << "-//W3C//DTD SVG 1.1//EN" << '"' << '\n';
+	os << ' ' << '"' << "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" << '"' << '>' << '\n';
+	os << "<svg> \n";
 	for (int i = 0; i < this->mCountShapes; i++)
 	{
 		this->mShapes[i]->operator<<(os);
