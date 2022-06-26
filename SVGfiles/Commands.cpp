@@ -7,7 +7,7 @@
 
 
 std::fstream SVGFile;
-std::fstream SVGRecovoryFile;
+std::fstream SVGRecoveryFile;
 std::string fileNameCopy;
 
 int readNumber(size_t index,size_t helper, char* readFromFile)
@@ -47,11 +47,14 @@ size_t count(int num)
 
 void Commands::extraFileFunction()
 {
-	SVGRecovoryFile.open("recovery.svg", std::ios::out);
+	SVGRecoveryFile.open("recovery.svg", std::ios::out);
 	SaveAs("recovery.svg");
 	std::cout<<"in recovery";
 	std::cout << std::endl;
 }
+
+
+
 
 void Commands::open(std::string fileName)
 {
@@ -369,12 +372,9 @@ void Commands::open(std::string fileName)
 		}
 	}
 
-
 	SVGFile.close();
 
 }
-
-
 
 
 void Commands::close()
@@ -528,8 +528,18 @@ void Commands::withinRectangle(int x, int y, int width, int height)
 
 }
 
+
 void Commands::run() //enter
 {
+	std::cout << "If there is a recovery file. Do you want the information from it ? Yes-1, No-2:  ";
+	size_t num;
+	std::cin >> num;
+	if (num == 1)
+	{
+		open("recovery.svg");
+		SaveAs("recovery.svg");
+	}
+
 	int helpMe = 0;
 	while (helpMe != 1)
 	{
@@ -541,7 +551,7 @@ void Commands::run() //enter
 		size_t len = std::strlen(userWishes);
 
 		//open
-		if (userWishes[0]=='o')
+		if (userWishes[0] == 'o')
 		{
 			std::cout << "File name? ";
 			std::cin.getline(fileNameForOpen, 100);
@@ -549,13 +559,13 @@ void Commands::run() //enter
 		}
 
 		//close
-		if (userWishes[0]=='c' && userWishes[1] == 'l')
+		if (userWishes[0] == 'c' && userWishes[1] == 'l')
 		{
 			close();
 		}
 
 		//Help
-		if (userWishes[0] == 'h') 
+		if (userWishes[0] == 'h')
 		{
 			help();
 		}
@@ -567,7 +577,7 @@ void Commands::run() //enter
 		}
 
 		//Exit
-		if (userWishes[0] == 'e'&&userWishes[1]=='x')
+		if (userWishes[0] == 'e' && userWishes[1] == 'x')
 		{
 			exit(fileNameCopy);
 			helpMe = 1;
@@ -588,12 +598,12 @@ void Commands::run() //enter
 		}
 
 		//Erase <n>
-		if (userWishes[0] == 'e'&&userWishes[1]=='r')
+		if (userWishes[0] == 'e' && userWishes[1] == 'r')
 		{
 			size_t n;
 			std::cin >> n;
 			erase(n);
-			
+
 		}
 
 		//Create
@@ -603,28 +613,44 @@ void Commands::run() //enter
 			extraFileFunction(); //
 		}
 
-		/*if (figureName[0] == 'w')
+		//within
+		///*if (figureName[0] == 'w')
+		//{
+		//	char whichFigure[100];
+		//	std::cin.getline(whichFigure, 100, ' ');
+		//	int x, y;
+		//	std::cin >> x;
+		//	std::cin >> y;
+
+		//	if (whichFigure[0] == 'c')
+		//	{
+		//		int r;
+		//		std::cin >> r;
+		//		withinCircle(x, y, r);
+		//	}
+		//	if (whichFigure[0] == 'r')
+		//	{
+		//		int w, h;
+		//		std::cin >> w;
+		//		std::cin >> h;
+		//		withinRectangle(x, y, w, h);
+		//	}
+		//}*/
+
+
+		//translate
+		if (userWishes[0] == 'w')
 		{
-			char whichFigure[100];
-			std::cin.getline(whichFigure, 100, ' ');
-			int x, y;
+			int x, y, index;
+			std::cout << "Index? ";
+			std::cin >> index;
+			std::cout << "x? ";
 			std::cin >> x;
+			std::cout << "y? ";
 			std::cin >> y;
 
-			if (whichFigure[0] == 'c')
-			{
-				int r;
-				std::cin >> r;
-				withinCircle(x, y, r);
-			}
-			if (whichFigure[0] == 'r')
-			{
-				int w, h;
-				std::cin >> w;
-				std::cin >> h;
-				withinRectangle(x, y, w, h);
-			}
-		}*/
+			this->mBasicShapesCollection.translate(index, x, y);
+		}
 	}
 
 	

@@ -44,6 +44,12 @@ void Rectangle::print() const
 	std::cout << "rectangle " << this->mX << " " << this->mY << " " << this->mWidth << " " << this->mHeight << " " << this->mWidth << " " << this->mFill;
 }
 
+void Rectangle::translate(int newX, int newY)
+{
+	this->mX += newX;
+	this->mY += newY;
+}
+
 std::ostream& Rectangle::operator<<(std::ostream& os)
 {
 	os << "<rect x=" << '"' << this->mX << '"' << ' ' << "y=" << '"' << this->mY << '"' << ' ' << "width=" << '"' << this->mWidth << '"' << ' ' << "height=" << '"' << this->mHeight << '"' << ' ' << "fill=" << '"' << this->mFill << '"' << ' ' << '/' << '>' << '\n';

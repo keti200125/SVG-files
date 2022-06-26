@@ -26,6 +26,7 @@ public:
 	void addCircle(int x, int y, std::string fill, int radius);
 	void addLine(int x1, int y1, std::string fill, int x2, int y2);
 	void addEllipse(int x, int y, int rX, int rY, std::string fill);
+	void translate(size_t index, int newX, int newY);
 
 	BasicShapesCollection();
 	BasicShapesCollection(BasicShapes** shapes, size_t shapesNumber, size_t capacity);
@@ -36,6 +37,7 @@ public:
 
 	void freeAllSpace();
 	void writeInFile(std::ostream&);
+
 };
 
 

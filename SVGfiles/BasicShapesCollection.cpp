@@ -131,6 +131,18 @@ void BasicShapesCollection::removeShapeByIndex(std::size_t index) //
 
 }
 
+void BasicShapesCollection::translate(size_t index, int newX, int newY)
+{
+	if (index < this->mCountShapes)
+	{
+		this->mShapes[index - 1]->translate(newX,newY);
+	}
+	else
+	{
+		std::cout << "There is no figure on this position";
+	}
+}
+
 void BasicShapesCollection::printAll() const
 {
 	for (int i = 0; i < this->mCountShapes; i++)

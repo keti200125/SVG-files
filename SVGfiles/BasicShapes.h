@@ -22,6 +22,7 @@ public:
 	virtual const std::string getFill() const = 0;
 	virtual BasicShapes* clone() const = 0;
 	virtual void print() const = 0;
+	virtual void translate(int newX, int newY) = 0;
 
 	BasicShapes();
 	BasicShapes(int, int, std::string);

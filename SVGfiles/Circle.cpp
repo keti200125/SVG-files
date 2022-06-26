@@ -41,6 +41,12 @@ void Circle::print() const
 	std::cout << "circle " << this->mX << " " << this->mY << " " << this->mRadius << " " << this->mFill;
 }
 
+void Circle::translate(int newX, int newY)
+{
+	this->mX += newX;
+	this->mY += newY;
+}
+
  
 std::ostream& Circle::operator<<(std::ostream& os)  //<circle cx="5" cy="5" r="10" fill="blue" />
 {

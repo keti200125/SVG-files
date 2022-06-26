@@ -34,6 +34,11 @@ void Line::print() const
 	std::cout << "line " << this->mX << " " << this->mY << " " << this->mX2 << " " << this->mY2 << " " << this->mFill;
 
 }
+void Line::translate(int newX, int newY)
+{
+	this->mX += newX;
+	this->mY += newY;
+}
 
 
 std::ostream& Line::operator<<(std::ostream& os)   //<line x1="30" y1="300" x2="500" y2="100" fill="none"/>
