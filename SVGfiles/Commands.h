@@ -12,18 +12,18 @@ private:
 
 public:
 
-	void open(std::string fileName); //
-	void close(); //
-	void save(std::string);  // 
-	void SaveAs(std::string fileName); //
-	void help() const; //
-	void exit(std::string); //
-	void print() const; //
-	void create(); //
-	void erase(size_t n); // 
-	void translate(size_t n); 
-	void withinCircle(int,int,int); 
-	void withinRectangle(int, int, int, int); 
+	void open(std::string fileName);
+	void close(); 
+	void save(std::string);  
+	void SaveAs(std::string fileName);
+	void help() const; 
+	void exit(std::string); 
+	void print() const; 
+	void create(); 
+	void erase(size_t n);  
+	void translate(); 
+	/*void withinCircle(int,int,int); 
+	void withinRectangle(int, int, int, int); */
 
 	void extraFileFunction();
 

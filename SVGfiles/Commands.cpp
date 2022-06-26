@@ -388,7 +388,6 @@ void Commands::close()
 	
 	std::cout << "Successfully closed file"<< std::endl;
 }
-
 void Commands::help() const
 {
 	std::cout << "The following commands are supported:" << std::endl;
@@ -404,13 +403,11 @@ void Commands::help() const
 	std::cout << "translate [<n>]   translates the figure with sequence number <n> or all figures, if <n> not specified" << std::endl;
 	std::cout << "within <option>   displays all shapes that are completely contained in a given region.The user can specify by <option>" << std::endl;
 }
-
 void Commands::print() const
 {
 	this->mBasicShapesCollection.printAll();
 	std::cout << std::endl;
 }
-
 void Commands::save(std::string fileName)
 {
 	std::fstream SVGFile;
@@ -518,14 +515,26 @@ void Commands::erase(size_t n)
 	this->mBasicShapesCollection.removeShapeByIndex(n);
 	extraFileFunction(); //
 }
-//void translate(size_t n);
-void Commands::withinCircle(int x,int y, int r )
-{
+//void Commands::withinCircle(int x,int y, int r )
+//{
+//
+//}
+//void Commands::withinRectangle(int x, int y, int width, int height)
+//{
+//
+//}
 
-}
-void Commands::withinRectangle(int x, int y, int width, int height)
+void Commands::translate()
 {
+	int x, y, index;
+	std::cout << "Index? ";
+	std::cin >> index;
+	std::cout << "x? ";
+	std::cin >> x;
+	std::cout << "y? ";
+	std::cin >> y;
 
+	this->mBasicShapesCollection.translate(index, x, y);
 }
 
 
@@ -641,15 +650,7 @@ void Commands::run() //enter
 		//translate
 		if (userWishes[0] == 'w')
 		{
-			int x, y, index;
-			std::cout << "Index? ";
-			std::cin >> index;
-			std::cout << "x? ";
-			std::cin >> x;
-			std::cout << "y? ";
-			std::cin >> y;
-
-			this->mBasicShapesCollection.translate(index, x, y);
+			translate();
 		}
 	}
 
