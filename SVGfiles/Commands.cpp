@@ -377,8 +377,6 @@ void Commands::open(std::string fileName)
 
 
 
-
-
 void Commands::close()
 {
 	if (SVGFile.is_open())
