@@ -3,15 +3,19 @@
 #include "BasicShapesCollection.h"
 #include<cstring>
 #pragma warning(disable: 4996)
+#define MAX_SIZE 5000
 
 
 std::fstream SVGFile;
 std::fstream SVGRecovoryFile;
 std::string fileNameCopy;
 
-void readNumber(size_t indexCopy,size_t index, size_t counter,size_t helper, char* readFromFile, int num)
+int readNumber(size_t index,size_t helper, char* readFromFile)
 {
-	while ((int)readFromFile[indexCopy] >= (int)'0' && (int)readFromFile[indexCopy] <= (int)'9')
+	size_t indexCopy = index;
+	int num = 0;
+	int counter = 0;
+	while ((int)readFromFile[indexCopy] >=48 && (int)readFromFile[indexCopy] <=57)
 	{
 		counter++; // 3 (for 3 digits)
 		indexCopy++;  // "
@@ -20,9 +24,24 @@ void readNumber(size_t indexCopy,size_t index, size_t counter,size_t helper, cha
 	helper /= 10; //100
 	for (int i = 0; i < counter; i++)
 	{
-		num += ((int)readFromFile[index + i] - (int)'0') * helper;
+		num += ((int)readFromFile[index + i] -'0') * helper;
 		helper /= 10;
 	}
+
+	return num;
+
+}
+size_t count(int num)
+{
+	size_t counter = 1;
+	while (num>9)
+	{
+		num /= 10;
+		counter++;
+
+	}
+
+	return counter;
 
 }
 
@@ -39,7 +58,6 @@ void Commands::open(std::string fileName)
 	SVGFile.open(fileName, std::ios::in);
 	fileNameCopy = fileName;
 
-
 	if (!SVGFile)
 	{
 		SVGFile.open(fileName, std::ios::out);
@@ -50,10 +68,8 @@ void Commands::open(std::string fileName)
 		}
 		else
 		{
-			SVGFile << "<?xml version=" << '"' << "1.0" << '"' << " standalone=" << '"' << "no" << '"' << "?>"<< '\n';
-			SVGFile << "<!DOCTYPE svg PUBLIC " << '"' << "-//W3C//DTD SVG 1.1//EN" << '"' << '\n';
-			SVGFile <<' '<< '"' << "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" << '"' << '>' << '\n';
-			SVGFile << "<svg> \n";
+			SVGFile << "<?xml version=\"1.0\" standalone=\"no\"?>" << '\n';
+			SVGFile << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << '\n';
 			SVGFile << "</svg>";
 			std::cout << "Successfully created new file " << fileName << std::endl;
 			SVGFile.close();
@@ -66,116 +82,133 @@ void Commands::open(std::string fileName)
 	}
 
 
-	//we get the size of the file
-	size_t current = SVGFile.tellg();
-	SVGFile.seekg(0, std::ios::end);
-	size_t size = SVGFile.tellg();
-	SVGFile.seekg(current);
-
+	
 	//now we put what we read from the file in char
-	char readFromFile[5000];
-	SVGFile.read(readFromFile, size);
-	readFromFile[size+1]= '\0';
-
-	SVGFile.close();
-
-	
-	
-
-	size_t index = 0;
-
-	while (index<size)
+	while (!SVGFile.eof())
 	{
+		char readFromFile[MAX_SIZE];
+		SVGFile.getline(readFromFile, MAX_SIZE, '\n');
+		size_t index = 0;
+		std::cout << readFromFile;
+		std::cout << '\n';
 		if (readFromFile[index] == '<')
 		{
 			//in case of rectangle
-			if (readFromFile[index + 1] == 'r' && readFromFile[index + 2] == 'e' && readFromFile[index + 3] == 'c' && readFromFile[index + 4] == 't')
+			if (readFromFile[1] == 'r' && readFromFile[2] == 'e' && readFromFile[3] == 'c' && readFromFile[4] == 't')
 			{
-				std::string fill;
+				char fill[20] = {};
 				int x = 0;
 				int y = 0;
 				int width = 0;
 				int height = 0;
-				index += 9; // num <rect x="   5   " y="5" width="10" height="10" fill="green" />
 
-				//for x 
-				size_t indexCopy = index;
-				size_t counter = 0;
 				size_t helper = 1;
 
-				readNumber(indexCopy, index, counter, helper, readFromFile,x);
-			
-				index += counter + 5; //3-1 +6
-				counter = 0;
-				indexCopy = index;
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
+
+				//for x 
+				x = readNumber(index, helper, readFromFile);
+
+				index += count(x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
 				//for y 
-				readNumber(indexCopy, index, counter, helper, readFromFile,y);
+				y = readNumber(index, helper, readFromFile);
 
-				index += counter + 9; //3-1 +10
-				counter = 0;
-				indexCopy = index;
+				index += count(y);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
 				//for width
-				readNumber(indexCopy, index, counter, helper, readFromFile,width);
-
-				index += counter + 10; //3-1 +11
-				counter = 0;
-				indexCopy = index;
+				width = readNumber(index, helper, readFromFile);
+				index += count(width);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
 				//for height
-				readNumber(indexCopy, index, counter, helper, readFromFile,height);
-				index += counter + 8;
-				counter = 0;
-				indexCopy = index;
+				height = readNumber(index, helper, readFromFile);
+				index += count(height);
+
+				while (readFromFile[index] != 'f')
+				{
+					index++;
+				}
+				while (readFromFile[index] != '"')
+				{
+					index++;
+				}
+				index++;
+
+				//for color
 				int iF = 0;
 				while (readFromFile[index] != '"')
 				{
 					fill[iF] = readFromFile[index];
 					iF++;
 					index++;
-
 				}
-				/*fill[iF + 1] = '/0';*/
 
 				mBasicShapesCollection.addRectangle(x, y, fill, width, height);
 			}
 
 			//in case of circle
-			if (readFromFile[index + 1] == 'c' && readFromFile[index + 2] == 'i' && readFromFile[index + 3] == 'r' && readFromFile[index + 4] == 'c' &&
-				readFromFile[index + 5] == 'l' && readFromFile[index + 6] == 'e')
+			if (readFromFile[1] == 'c' && readFromFile[2] == 'i' && readFromFile[3] == 'r' && readFromFile[4] == 'c' &&
+				readFromFile[5] == 'l' && readFromFile[6] == 'e')
 			{
 
-				std::string fill;
+				char fill[20] = {};
 				int x = 0;
 				int y = 0;
 				int radius = 0;
-				index += 12; // num <circle cx="   5   " cy="5" r="10" fill="blue" />
 
-				size_t indexCopy = index;
-				size_t counter = 0;
 				size_t helper = 1;
 
-				//for x
-				readNumber(indexCopy, index, counter, helper, readFromFile, x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				//for x 
+				x = readNumber(index, helper, readFromFile);
 
-				//for y
-				readNumber(indexCopy, index, counter, helper, readFromFile, y);
+				index += count(x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
-				index += counter + 5; //3-1 +6
-				counter = 0;
-				indexCopy = index;
+				//for y 
+				y = readNumber(index, helper, readFromFile);
+
+				index += count(y);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
 				//for r 
-				readNumber(indexCopy, index, counter, helper, readFromFile,radius);
+				radius = readNumber(index, helper, readFromFile);
+				index += count(radius);
 
-				index += counter + 8; //3-1 +9
-				counter = 0;
-				indexCopy = index;
+				while (readFromFile[index] != 'f')
+				{
+					index++;
+				}
+				while (readFromFile[index] != '"')
+				{
+					index++;
+				}
+				index++;
 
 				//for fill
 				int iF = 0;
@@ -184,71 +217,80 @@ void Commands::open(std::string fileName)
 					fill[iF] = readFromFile[index];
 					iF++;
 					index++;
-
 				}
-				/*fill[iF + 1] = '/0';*/
 
 
 				mBasicShapesCollection.addCircle(x, y, fill, radius);
-			
+
 
 			}
 
-			//in case of ellipse
-			if (readFromFile[index + 1] == 'e' && readFromFile[index + 2] == 'l' && readFromFile[index + 3] == 'l' && readFromFile[index + 4] == 'i' &&
-				readFromFile[index + 5] == 'p' && readFromFile[index + 6] == 's'&& readFromFile[index + 7] == 'e')
+			if (readFromFile[1] == 'e' && readFromFile[2] == 'l' && readFromFile[3] == 'l' && readFromFile[4] == 'i' &&
+				readFromFile[5] == 'p' && readFromFile[6] == 's' && readFromFile[7] == 'e')
 			{
 
-				std::string fill;
+				char fill[20] = {};
 				int x = 0;
 				int y = 0;
 				int r1 = 0;
 				int r2 = 0;
-				index += 13; // num  <ellipse cx="  100  " cy="50" rx="100" ry="50" fill="red"/>
 
-				size_t indexCopy = index;
-				size_t counter = 0;
 				size_t helper = 1;
 
-				//for x
-				readNumber(indexCopy, index, counter, helper, readFromFile, x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				//for x 
+				x = readNumber(index, helper, readFromFile);
 
-				//for y
-				readNumber(indexCopy, index, counter, helper, readFromFile, y);
+				index += count(x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				//for y 
+				y = readNumber(index, helper, readFromFile);
+
+				index += count(y);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
+
 
 				//for r1
-				readNumber(indexCopy, index, counter, helper, readFromFile, r1);
-
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				r1 = readNumber(index, helper, readFromFile);
+				index += count(r2);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
 				//for r2
-				readNumber(indexCopy, index, counter, helper, readFromFile, r2);
+				r2 = readNumber(index, helper, readFromFile);
+				index+= count(r2);
 
-				index += counter + 8; //3-1 +9
-				counter = 0;
-				indexCopy = index;
+				while (readFromFile[index] != 'f')
+				{
+					index++;
+				}
+				while (readFromFile[index] != '"')
+				{
+					index++;
+				}
+				index++;
 
-				//for fill
+				//for color
 				int iF = 0;
 				while (readFromFile[index] != '"')
 				{
 					fill[iF] = readFromFile[index];
 					iF++;
 					index++;
-
 				}
-				/*fill[iF + 1] = '/0';*/
-
 
 				mBasicShapesCollection.addEllipse(x, y, r1, r2, fill);
 
@@ -256,72 +298,84 @@ void Commands::open(std::string fileName)
 			}
 
 			//in case of line
-			if (readFromFile[index + 1] == 'l' && readFromFile[index + 2] == 'i' && readFromFile[index + 3] == 'n' && readFromFile[index + 4] =='e')
+			if (readFromFile[index + 1] == 'l' && readFromFile[index + 2] == 'i' && readFromFile[index + 3] == 'n' && readFromFile[index + 4] == 'e')
 			{
 
-				std::string fill;
+				char fill[20] = {};
 				int x = 0;
 				int y = 0;
 				int x2 = 0;
 				int y2 = 0;
 				index += 10; // num <line x1="  300  " y1="300" x2="500" y2="100" fill="none"/>
 
-				size_t indexCopy = index;
-				size_t counter = 0;
 				size_t helper = 1;
 
-				//for x
-				readNumber(indexCopy, index, counter, helper, readFromFile, x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				//for x 
+				x = readNumber(index, helper, readFromFile);
 
-				//for y
-				readNumber(indexCopy, index, counter, helper, readFromFile, y);
+				index += count(x);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				//for y 
+				y = readNumber(index, helper, readFromFile);
 
+				index += count(y);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 				//for x2
-				readNumber(indexCopy, index, counter, helper, readFromFile, x2);
+				x2 = readNumber(index, helper, readFromFile);
 
-				index += counter + 6; //3-1 +7
-				counter = 0;
-				indexCopy = index;
+				index += count(x2);
+				while ((int)readFromFile[index] < 48 || (int)readFromFile[index]>57)
+				{
+					index++;
+				}
 
 				//for y2
-				readNumber(indexCopy, index, counter, helper, readFromFile, y2);
+				y2 = readNumber(index, helper, readFromFile);
+				index += count(y2);
 
-				index += counter + 8; //3-1 +9
-				counter = 0;
-				indexCopy = index;
+				while (readFromFile[index] != 'f')
+				{
+					index++;
+				}
+				while (readFromFile[index] != '"')
+				{
+					index++;
+				}
+				index++;
 
-				//for fill
+				//for color
 				int iF = 0;
 				while (readFromFile[index] != '"')
 				{
 					fill[iF] = readFromFile[index];
 					iF++;
 					index++;
-
 				}
 
-
-				mBasicShapesCollection.addLine(x, y, fill,x2,y2);
-
-
+				mBasicShapesCollection.addLine(x, y, fill, x2, y2);
 			}
-
-
 		}
-
-		index++;
 	}
 
 
+	SVGFile.close();
+
 }
+
+
+
 
 
 
@@ -356,6 +410,7 @@ void Commands::help() const
 void Commands::print() const
 {
 	this->mBasicShapesCollection.printAll();
+	std::cout << std::endl;
 }
 
 void Commands::save(std::string fileName)

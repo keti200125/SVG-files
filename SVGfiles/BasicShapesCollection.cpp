@@ -113,7 +113,7 @@ void BasicShapesCollection::removeShapeByIndex(std::size_t index) //
 		size_t counter = 0;
 		for (size_t i = 0; i < this->mCountShapes; i++)
 		{
-			if (i != index)
+			if (i != index-1)
 			{
 				currCollection[counter] = this->mShapes[i];
 				counter++;
@@ -136,6 +136,7 @@ void BasicShapesCollection::printAll() const
 	for (int i = 0; i < this->mCountShapes; i++)
 	{
 		this->mShapes[i]->print();
+		std::cout << std::endl;
 	}
 }
 
@@ -154,10 +155,8 @@ void BasicShapesCollection::freeAllSpace()
 
 void BasicShapesCollection::writeInFile(std::ostream& os)
 {
-	os << "<?xml version=" << '"' << "1.0" << '"' << " standalone=" << '"' << "no" << '"' << "?>" << '\n';
-	os << "<!DOCTYPE svg PUBLIC " << '"' << "-//W3C//DTD SVG 1.1//EN" << '"' << '\n';
-	os << ' ' << '"' << "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" << '"' << '>' << '\n';
-	os << "<svg> \n";
+	os << "<?xml version=\"1.0\" standalone=\"no\"?>" << '\n';
+	os << "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\">" << '\n';
 	for (int i = 0; i < this->mCountShapes; i++)
 	{
 		this->mShapes[i]->operator<<(os);
