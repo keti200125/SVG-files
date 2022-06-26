@@ -1,2 +1,2 @@
 # SVGfiles
-# Project2 OOP
+Project for the OOP course in Sofia University
